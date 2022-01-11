@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.config.js');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -9,9 +8,7 @@ module.exports = merge(common, {
 });
 
 function getPlugins() {
-    const plugins = [
-        new OptimizeCssAssetsPlugin()
-    ];
+    const plugins = [];
 
     if (process.env.ANALYZE_BUNDLE) {
         const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
