@@ -16,37 +16,40 @@
     </div>
 </template>
 
-<script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+<script setup lang="ts">
     import frequencies from '../frequencies';
     import { Frequency } from '@/types/Frequency';
+import { computed, ref } from 'vue';
 
-    @Component
-    export default class FrequencyForm extends Vue {
-        @Prop() value!: string;
-        @Prop() readonly frequencies!: Frequency[];
-        isFormVisible = false;
+    const props = defineProps<{
+        value: string,
+        frequencies: Frequency[]
+    }>();
 
-        updateValue(event: any){
-            this.close();
-            this.$emit('input', event.target.value);
-        }
+    const emit = defineEmits(['input']);
 
-        get frequencyName() {
-            for (const f of this.frequencies) {
-                if (f.id === this.value) {
-                    return f.name;
+    const isFormVisible = ref(false);
+
+    const frequencyName = computed(() => {
+        for (const c of props.frequencies) {
+                if (c.id === props.value) {
+                    return c.name;
                 }
             }
-            return "";
-        }
+            return '';
+    });
 
-        open() {
-            this.isFormVisible = true;
-        }
+    const open = (): void => {
+        isFormVisible.value = true;
+    };
 
-        close() {
-            this.isFormVisible = false;
-        }
+    const close = (): void => {
+        isFormVisible.value = false;
+    };
+
+    const updateValue = (event: Event) => {
+        close();
+        const value = (event.target as HTMLInputElement).value;
+        emit('input', value);
     }
 </script>

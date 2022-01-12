@@ -25,7 +25,7 @@
         countries: Country[]
     }>();
 
-    const emit = defineEmits(['close'])
+    const emit = defineEmits(['input']);
 
     const isFormVisible = ref(false);
 
@@ -49,6 +49,6 @@
     const updateValue = (event: Event) => {
         close();
         const value = (event.target as HTMLInputElement).value;
-        emit('close', value);
+        emit('input', value);
     }
 </script>
