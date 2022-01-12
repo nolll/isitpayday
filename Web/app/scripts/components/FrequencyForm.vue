@@ -19,7 +19,7 @@
 <script setup lang="ts">
     import frequencies from '../frequencies';
     import { Frequency } from '@/types/Frequency';
-import { computed, ref } from 'vue';
+    import { computed, ref } from 'vue';
 
     const props = defineProps<{
         value: string,
