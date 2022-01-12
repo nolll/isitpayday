@@ -16,36 +16,39 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
     import { Country } from '@/types/Country';
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { computed, ref } from 'vue';
     
-    @Component
-    export default class CountryForm extends Vue {
-        @Prop() value!: string;
-        @Prop() readonly countries!: Country[];
-        isFormVisible = false;
+    const props = defineProps<{
+        value: string,
+        countries: Country[]
+    }>();
 
-        get countryName() {
-            for (const c of this.countries) {
-                if (c.id === this.value) {
+    const emit = defineEmits(['close'])
+
+    const isFormVisible = ref(false);
+
+    const countryName = computed(() => {
+        for (const c of props.countries) {
+                if (c.id === props.value) {
                     return c.name;
                 }
             }
             return '';
-        }
+    });
 
-        updateValue(event: any){
-            this.close();
-            this.$emit('input', event.target.value);
-        }
+    const open = (): void => {
+        isFormVisible.value = true;
+    };
 
-        open() {
-            this.isFormVisible = true;
-        }
+    const close = (): void => {
+        isFormVisible.value = false;
+    };
 
-        close() {
-            this.isFormVisible = false;
-        }
+    const updateValue = (event: Event) => {
+        close();
+        const value = (event.target as HTMLInputElement).value;
+        emit('close', value);
     }
 </script>
