@@ -32,11 +32,11 @@
 
     const frequencyName = computed(() => {
         for (const c of props.frequencies) {
-                if (c.id === props.value) {
-                    return c.name;
-                }
+            if (c.id === props.value) {
+                return c.name;
             }
-            return '';
+        }
+        return '';
     });
 
     const open = (): void => {
