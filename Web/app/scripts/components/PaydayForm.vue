@@ -3,7 +3,7 @@
         <h3>Payday</h3>
         <div class="payday-info">
             <p v-show="isFormVisible">
-                <select :value="value" v-on:input="updateValue">
+                <select :value="modelValue" v-on:input="updateValue">
                     <option v-for="p in paydays" :value="p.id" :key="p.id">{{p.name}}</option>
                 </select>
                 <a href="#" @click.prevent="close">Cancel</a>
@@ -24,16 +24,16 @@
     import { computed, ref } from 'vue';
 
     const props = defineProps<{
-        value: number,
+        modelValue: number,
         frequencyId: string
     }>();
 
-    const emit = defineEmits(['input']);
+    const emit = defineEmits(['update:modelValue']);
 
     const isFormVisible = ref(false);
 
     const paydayName = computed(() => {
-        return format(props.frequencyId, props.value);
+        return format(props.frequencyId, props.modelValue);
     });
 
     const paydays = computed(() => {
@@ -80,6 +80,6 @@
     const updateValue = (event: Event) => {
         close();
         const value = (event.target as HTMLInputElement).value;
-        emit('input', value);
+        emit('update:modelValue', value);
     }
 </script>

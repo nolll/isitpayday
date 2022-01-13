@@ -1,4 +1,4 @@
-﻿import vue from 'vue';
+﻿import { createApp } from 'vue';
 import App from './App.vue';
 import './styles';
 
@@ -9,9 +9,11 @@ function domReady(callback: () => void) {
 }
 
 function init(){
-    new vue({
-        render: h => h(App)
-    }).$mount('#app');
+    var app = createApp({
+        rootComponent: App
+    });
+
+    app.mount('#app');
 }
 
 domReady(init);

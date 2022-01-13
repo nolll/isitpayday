@@ -32,7 +32,7 @@
     import storage from './storage';
     import frequencyTypes from './frequencies';
     import advancedFormat from 'dayjs/plugin/advancedFormat';
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, onMounted, ref, watch } from 'vue';
     
     dayjs.extend(advancedFormat);
 
@@ -83,31 +83,27 @@
         return `mailto:${email.value}`;    
     });
 
-    // @Watch('country')
-    const countryChanged = () => {
+    watch(country, (oldVal, newVal) => {
         storage.saveCountry(country.value);
         loadPayday();
-    };
+    });
 
-    // @Watch('frequency')
-    const frequencyChanged = () => {
+    watch(frequency, (oldVal, newVal) => {
         storage.saveFrequency(frequency.value);
         payday.value = frequency.value === frequencyTypes.weekly ? defaults.weeklyPayday : defaults.monthlyPayday;
         storage.savePayday(payday.value);
         loadPayday();
-    };
+    });
 
-    // @Watch('timezone')
-    const timezoneChanged = () => {
+    watch(timezone, (oldVal, newVal) => {
         storage.saveTimezone(timezone.value);
         loadPayday();
-    };
+    });
 
-    // @Watch('payday')
-    const paydayChanged = () => {
+    watch(payday, (oldVal, newVal) => {
         storage.savePayday(payday.value);
         loadPayday();
-    };
+    });
 
     const loadSettings = () => {
         country.value = storage.getCountry();

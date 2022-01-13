@@ -3,7 +3,7 @@
         <h3>Frequency</h3>
         <div class="frequency-info">
             <p v-show="isFormVisible">
-                <select :value="value" v-on:input="updateValue">
+                <select :value="modelValue" v-on:input="updateValue">
                     <option v-for="f in frequencies" :value="f.id" :key="f.id">{{f.name}}</option>
                 </select>
                 <a href="#" @click.prevent="close">Cancel</a>
@@ -22,17 +22,17 @@
     import { computed, ref } from 'vue';
 
     const props = defineProps<{
-        value: string,
+        modelValue: string,
         frequencies: Frequency[]
     }>();
 
-    const emit = defineEmits(['input']);
+    const emit = defineEmits(['update:modelValue']);
 
     const isFormVisible = ref(false);
 
     const frequencyName = computed(() => {
         for (const c of props.frequencies) {
-            if (c.id === props.value) {
+            if (c.id === props.modelValue) {
                 return c.name;
             }
         }
@@ -50,6 +50,6 @@
     const updateValue = (event: Event) => {
         close();
         const value = (event.target as HTMLInputElement).value;
-        emit('input', value);
+        emit('update:modelValue', value);
     }
 </script>

@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -26,10 +26,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: [{
-                    loader: 'vue-loader',
-                    options: {
-                        appendExtension: true
-                    }
+                    loader: 'vue-loader'
                 }],
                 exclude: /node_modules/
             },
@@ -72,7 +69,6 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.esm.js',
             '@': path.resolve(__dirname, './scripts')
         },
         extensions: ['.ts', '.js', '.vue']
