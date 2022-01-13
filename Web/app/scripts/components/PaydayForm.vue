@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-    import frequencies from '@/frequencies';
+    import frequencyTypes from '@/frequencyTypes';
     import nthFormatter from '@/nth-formatter';
     import weekdays from '@/weekdays';
     import { Payday } from '@/types/Payday';
@@ -41,7 +41,7 @@
     });
 
     const getPayDays = (frequencyId: string) => {
-        if (frequencyId === frequencies.weekly)
+        if (frequencyId === frequencyTypes.weekly)
             return getWeeklyPaydays(frequencyId);
         return getMonthlyPaydays(frequencyId);
     }
@@ -64,7 +64,7 @@
     }
 
     const format = (frequencyId: string, payday: number) => {
-        if (frequencyId === frequencies.weekly)
+        if (frequencyId === frequencyTypes.weekly)
             return weekdays.getName(payday);
         return nthFormatter.format(payday);
     }

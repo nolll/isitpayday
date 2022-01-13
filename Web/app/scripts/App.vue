@@ -30,7 +30,7 @@
     import urls from './urls';
     import defaults from './defaults';
     import storage from './storage';
-    import frequencyTypes from './frequencies';
+    import frequencyTypes from './frequencyTypes';
     import advancedFormat from 'dayjs/plugin/advancedFormat';
     import { computed, onMounted, ref, watch } from 'vue';
     
