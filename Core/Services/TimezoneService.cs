@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Exceptions;
-using TimeZoneConverter;
+//using TimeZoneConverter;
 
 namespace Core.Services;
 
@@ -32,8 +32,8 @@ public static class TimezoneService
     {
         try
         {
-            var windowsId = TZConvert.IanaToWindows(ianaId);
-            return GetWindowsTimezone(windowsId);
+            //var windowsId = TZConvert.IanaToWindows(ianaId);
+            return null;//GetWindowsTimezone(windowsId);
         }
         catch (InvalidTimeZoneException)
         {
