@@ -1,10 +1,9 @@
-namespace Core.Exceptions
+namespace Core.Exceptions;
+
+public class TimezoneNotFoundException : NotFoundException
 {
-    public class TimezoneNotFoundException : NotFoundException
+    public TimezoneNotFoundException(string id)
+        : base($"Timezone not found: {id}")
     {
-        public TimezoneNotFoundException(string id)
-            : base($"Timezone not found: {id}")
-        {
-        }
     }
 }

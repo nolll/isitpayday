@@ -1,19 +1,18 @@
 using JetBrains.Annotations;
 
-namespace Web.Models
+namespace Web.Models;
+
+public class FrequencyModel
 {
-    public class FrequencyModel
+    [UsedImplicitly]
+    public string Id { get; }
+
+    [UsedImplicitly]
+    public string Name { get; }
+
+    public FrequencyModel(string id, string name)
     {
-        [UsedImplicitly]
-        public string Id { get; }
-
-        [UsedImplicitly]
-        public string Name { get; }
-
-        public FrequencyModel(string id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        Id = id;
+        Name = name;
     }
 }

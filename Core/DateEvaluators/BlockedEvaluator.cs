@@ -1,20 +1,19 @@
 ﻿using System;
 using Core.Classes;
 
-namespace Core.DateEvaluators
+namespace Core.DateEvaluators;
+
+public class BlockedEvaluator
 {
-    public class BlockedEvaluator
+    private readonly HolidayEvaluator _holidayEvaluator;
+
+    public BlockedEvaluator(Country country)
     {
-        private readonly HolidayEvaluator _holidayEvaluator;
+        _holidayEvaluator = HolidayEvaluator.Create(country);
+    }
 
-        public BlockedEvaluator(Country country)
-        {
-            _holidayEvaluator = HolidayEvaluator.Create(country);
-        }
-
-        public bool IsBlocked(DateTime userTime)
-        {
-            return WeekendEvaluator.IsWeekend(userTime) || _holidayEvaluator.IsHoliday(userTime);
-        }
+    public bool IsBlocked(DateTime userTime)
+    {
+        return WeekendEvaluator.IsWeekend(userTime) || _holidayEvaluator.IsHoliday(userTime);
     }
 }

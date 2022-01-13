@@ -1,11 +1,10 @@
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class VeteransDayRule : FixedDate
 {
-    public class VeteransDayRule : FixedDate
+    public VeteransDayRule() : base(Month.November, 11)
     {
-        public VeteransDayRule() : base(Month.November, 11)
-        {
-        }
     }
 }

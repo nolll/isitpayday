@@ -1,12 +1,11 @@
 using System;
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class MidsummersEveRule : FirstDayOfWeekFrom
 {
-    public class MidsummersEveRule : FirstDayOfWeekFrom
+    public MidsummersEveRule() : base(DayOfWeek.Friday, Month.June, 19)
     {
-        public MidsummersEveRule() : base(DayOfWeek.Friday, Month.June, 19)
-        {
-        }
     }
 }

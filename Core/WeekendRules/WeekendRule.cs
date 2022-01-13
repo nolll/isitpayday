@@ -1,12 +1,11 @@
 using System;
 
-namespace Core.WeekendRules
+namespace Core.WeekendRules;
+
+public class WeekendRule
 {
-    public class WeekendRule
+    public static bool IsWeekend(DateTime userTime)
     {
-        public static bool IsWeekend(DateTime userTime)
-        {
-            return userTime.DayOfWeek == DayOfWeek.Saturday || userTime.DayOfWeek == DayOfWeek.Sunday;
-        }
+        return userTime.DayOfWeek == DayOfWeek.Saturday || userTime.DayOfWeek == DayOfWeek.Sunday;
     }
 }

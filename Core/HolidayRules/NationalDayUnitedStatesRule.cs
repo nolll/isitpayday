@@ -1,11 +1,10 @@
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class NationalDayUnitedStatesRule : FixedDate
 {
-    public class NationalDayUnitedStatesRule : FixedDate
+    public NationalDayUnitedStatesRule() : base(Month.July, 4)
     {
-        public NationalDayUnitedStatesRule() : base(Month.July, 4)
-        {
-        }
     }
 }

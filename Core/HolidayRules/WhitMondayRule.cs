@@ -1,9 +1,8 @@
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class WhitMondayRule : RelativeToEasterSunday
 {
-    public class WhitMondayRule : RelativeToEasterSunday
+    public WhitMondayRule() : base(50)
     {
-        public WhitMondayRule() : base(50)
-        {
-        }
     }
 }

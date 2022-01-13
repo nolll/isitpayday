@@ -5,25 +5,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Web.Bootstrapping;
 using Web.Settings;
 
-namespace Web
+namespace Web;
+
+public class Startup
 {
-    public class Startup
+    private readonly AppSettings _settings;
+
+    public Startup(IConfiguration configuration)
     {
-        private readonly AppSettings _settings;
+        _settings = configuration.Get<AppSettings>();
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            _settings = configuration.Get<AppSettings>();
-        }
+    public void ConfigureServices(IServiceCollection services)
+    {
+        new ServiceConfig(_settings, services).Configure();
+    }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            new ServiceConfig(_settings, services).Configure();
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            new AppConfig(app, env).Configure();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        new AppConfig(app, env).Configure();
     }
 }

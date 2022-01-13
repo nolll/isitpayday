@@ -1,13 +1,12 @@
 ﻿using System;
 using Core.WeekendRules;
 
-namespace Core.DateEvaluators
+namespace Core.DateEvaluators;
+
+public class WeekendEvaluator
 {
-    public class WeekendEvaluator
+    public static bool IsWeekend(DateTime userTime)
     {
-        public static bool IsWeekend(DateTime userTime)
-        {
-            return WeekendRule.IsWeekend(userTime);
-        }
+        return WeekendRule.IsWeekend(userTime);
     }
 }

@@ -4,24 +4,23 @@ using Core.DateEvaluators;
 using NUnit.Framework;
 using Tests.Common.FakeClasses;
 
-namespace Core.Tests.DateEvaluators.HolidayEvaluators
+namespace Core.Tests.DateEvaluators.HolidayEvaluators;
+
+public class Arrange
 {
-    public class Arrange
+    private Country _country;
+    protected virtual string CountryCode => "";
+    protected virtual string CultureName => "";
+
+    [SetUp]
+    public void Setup()
     {
-        private Country _country;
-        protected virtual string CountryCode => "";
-        protected virtual string CultureName => "";
+        _country = new CountryInTest(CountryCode, CultureName);
+    }
 
-        [SetUp]
-        public void Setup()
-        {
-            _country = new CountryInTest(CountryCode, CultureName);
-        }
-
-        protected bool IsHoliday(string date)
-        {
-            var evaluator = HolidayEvaluator.Create(_country);
-            return evaluator.IsHoliday(DateTime.Parse(date));
-        }
+    protected bool IsHoliday(string date)
+    {
+        var evaluator = HolidayEvaluator.Create(_country);
+        return evaluator.IsHoliday(DateTime.Parse(date));
     }
 }

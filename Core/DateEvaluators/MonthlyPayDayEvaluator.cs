@@ -1,70 +1,69 @@
 ﻿using System;
 using Core.Classes;
 
-namespace Core.DateEvaluators
+namespace Core.DateEvaluators;
+
+public class MonthlyPayDayEvaluator
 {
-    public class MonthlyPayDayEvaluator
+    private readonly DateTime _utcTime;
+    private readonly TimeZoneInfo _timezone;
+    private readonly int _payDay;
+    private readonly BlockedEvaluator _blockedEvaluator;
+
+    public MonthlyPayDayEvaluator(Country country, DateTime utcTime, TimeZoneInfo timezone, int payDay)
     {
-        private readonly DateTime _utcTime;
-        private readonly TimeZoneInfo _timezone;
-        private readonly int _payDay;
-        private readonly BlockedEvaluator _blockedEvaluator;
+        _utcTime = utcTime;
+        _timezone = timezone;
+        _payDay = payDay;
+        _blockedEvaluator = new BlockedEvaluator(country);
+    }
 
-        public MonthlyPayDayEvaluator(Country country, DateTime utcTime, TimeZoneInfo timezone, int payDay)
+    private DateTime LocalTime => TimeZoneInfo.ConvertTime(_utcTime, _timezone);
+    public bool IsPayDay => LocalTime.Date == NextPayDay;
+
+    public DateTime NextPayDay
+    {
+        get
         {
-            _utcTime = utcTime;
-            _timezone = timezone;
-            _payDay = payDay;
-            _blockedEvaluator = new BlockedEvaluator(country);
+            var payDayDate = GetNextPayDate(LocalTime);
+            while (_blockedEvaluator.IsBlocked(payDayDate))
+            {
+                payDayDate = payDayDate.AddDays(-1);
+            }
+            return payDayDate.Date;
         }
+    }
 
-        private DateTime LocalTime => TimeZoneInfo.ConvertTime(_utcTime, _timezone);
-        public bool IsPayDay => LocalTime.Date == NextPayDay;
-
-        public DateTime NextPayDay
+    private DateTime GetNextPayDate(DateTime localTime)
+    {
+        var payDay = AdjustPayDayForShortMonths(localTime);
+        while (localTime.Day != payDay)
         {
-            get
-            {
-                var payDayDate = GetNextPayDate(LocalTime);
-                while (_blockedEvaluator.IsBlocked(payDayDate))
-                {
-                    payDayDate = payDayDate.AddDays(-1);
-                }
-                return payDayDate.Date;
-            }
+            localTime = localTime.AddDays(1);
         }
+        return localTime;
+    }
 
-        private DateTime GetNextPayDate(DateTime localTime)
+    private int AdjustPayDayForShortMonths(DateTime localTime)
+    {
+        var payDay = _payDay;
+        while (!IsMonthLongEnough(localTime, payDay))
         {
-            var payDay = AdjustPayDayForShortMonths(localTime);
-            while (localTime.Day != payDay)
-            {
-                localTime = localTime.AddDays(1);
-            }
-            return localTime;
+            payDay--;
         }
+        return payDay;
+    }
 
-        private int AdjustPayDayForShortMonths(DateTime localTime)
+    private bool IsMonthLongEnough(DateTime time, int payDay)
+    {
+        try
         {
-            var payDay = _payDay;
-            while (!IsMonthLongEnough(localTime, payDay))
-            {
-                payDay--;
-            }
-            return payDay;
+            var foo = new DateTime(time.Year, time.Month, payDay);
+            return true;
         }
-
-        private bool IsMonthLongEnough(DateTime time, int payDay)
+        catch (Exception)
         {
-            try
-            {
-                var foo = new DateTime(time.Year, time.Month, payDay);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

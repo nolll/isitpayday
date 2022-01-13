@@ -1,12 +1,11 @@
 using System;
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class ThanksgivingDayRule : NthDayOfWeekInMonth
 {
-    public class ThanksgivingDayRule : NthDayOfWeekInMonth
+    public ThanksgivingDayRule() : base(4, DayOfWeek.Thursday, Month.November)
     {
-        public ThanksgivingDayRule() : base(4, DayOfWeek.Thursday, Month.November)
-        {
-        }
     }
 }

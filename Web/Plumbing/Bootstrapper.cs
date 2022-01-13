@@ -1,12 +1,11 @@
-namespace Web.Plumbing
-{
-    public class Bootstrapper
-    {
-        public UseCaseContainer UseCases { get; }
+namespace Web.Plumbing;
 
-        public Bootstrapper()
-        {
-            UseCases = new UseCaseContainer();
-        }
+public class Bootstrapper
+{
+    public UseCaseContainer UseCases { get; }
+
+    public Bootstrapper()
+    {
+        UseCases = new UseCaseContainer();
     }
 }

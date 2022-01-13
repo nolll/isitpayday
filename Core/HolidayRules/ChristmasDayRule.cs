@@ -1,11 +1,10 @@
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class ChristmasDayRule : FixedDate
 {
-    public class ChristmasDayRule : FixedDate
+    public ChristmasDayRule() : base(Month.December, 25)
     {
-        public ChristmasDayRule() : base(Month.December, 25)
-        {
-        }
     }
 }

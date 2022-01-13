@@ -1,12 +1,11 @@
 using System;
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class ColumbusDayRule : NthDayOfWeekInMonth
 {
-    public class ColumbusDayRule : NthDayOfWeekInMonth
+    public ColumbusDayRule() : base(2, DayOfWeek.Monday, Month.October)
     {
-        public ColumbusDayRule() : base(2, DayOfWeek.Monday, Month.October)
-        {
-        }
     }
 }

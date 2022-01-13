@@ -1,9 +1,8 @@
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class MaundyThursdayRule : RelativeToEasterSunday
 {
-    public class MaundyThursdayRule : RelativeToEasterSunday
+    public MaundyThursdayRule() : base(-3)
     {
-        public MaundyThursdayRule() : base(-3)
-        {
-        }
     }
 }

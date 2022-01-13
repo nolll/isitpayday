@@ -3,46 +3,45 @@ using Core.UseCases;
 using NUnit.Framework;
 using Tests.Common;
 
-namespace Core.Tests.UseCases
+namespace Core.Tests.UseCases;
+
+public class WeeklyPayDayTests
 {
-    public class WeeklyPayDayTests
+    [Test]
+    public void Execute_TodayIsPayDay_IsTrue()
     {
-        [Test]
-        public void Execute_TodayIsPayDay_IsTrue()
-        {
-            var request = new WeeklyPayday.Request((int)Weekday.Friday, "SE", TestData.Timezones.Utc, TestData.Dates.UnblockedFriday);
+        var request = new WeeklyPayday.Request((int)Weekday.Friday, "SE", TestData.Timezones.Utc, TestData.Dates.UnblockedFriday);
 
-            var sut = GetSut();
-            var result = sut.Execute(request);
+        var sut = GetSut();
+        var result = sut.Execute(request);
 
-            Assert.IsTrue(result.IsPayDay);
-        }
+        Assert.IsTrue(result.IsPayDay);
+    }
 
-        [Test]
-        public void Execute_TodayIsNotPayDay_IsFalse()
-        {
-            var request = new WeeklyPayday.Request((int)Weekday.Thursday, "SE", TestData.Timezones.Utc, TestData.Dates.UnblockedFriday);
+    [Test]
+    public void Execute_TodayIsNotPayDay_IsFalse()
+    {
+        var request = new WeeklyPayday.Request((int)Weekday.Thursday, "SE", TestData.Timezones.Utc, TestData.Dates.UnblockedFriday);
 
-            var sut = GetSut();
-            var result = sut.Execute(request);
+        var sut = GetSut();
+        var result = sut.Execute(request);
 
-            Assert.IsFalse(result.IsPayDay);
-        }
+        Assert.IsFalse(result.IsPayDay);
+    }
 
-        [Test]
-        public void Execute_TomorrowIsChristmasEve_TodayIsPayday()
-        {
-            var request = new WeeklyPayday.Request((int)Weekday.Thursday, "SE", TestData.Timezones.Utc, TestData.Dates.DayBeforeChristmasEve);
+    [Test]
+    public void Execute_TomorrowIsChristmasEve_TodayIsPayday()
+    {
+        var request = new WeeklyPayday.Request((int)Weekday.Thursday, "SE", TestData.Timezones.Utc, TestData.Dates.DayBeforeChristmasEve);
 
-            var sut = GetSut();
-            var result = sut.Execute(request);
+        var sut = GetSut();
+        var result = sut.Execute(request);
 
-            Assert.IsTrue(result.IsPayDay);
-        }
+        Assert.IsTrue(result.IsPayDay);
+    }
 
-        private WeeklyPayday GetSut()
-        {
-            return new WeeklyPayday();
-        }
+    private WeeklyPayday GetSut()
+    {
+        return new WeeklyPayday();
     }
 }

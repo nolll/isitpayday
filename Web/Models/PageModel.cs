@@ -1,14 +1,13 @@
 ﻿using Web.Settings;
 
-namespace Web.Models
-{
-    public class PageModel
-    {
-        public string Version { get; }
+namespace Web.Models;
 
-        public PageModel(AppSettings appSettings)
-        {
-            Version = appSettings.Version;
-        }
+public class PageModel
+{
+    public string Version { get; }
+
+    public PageModel(AppSettings appSettings)
+    {
+        Version = appSettings.Version;
     }
 }

@@ -6,31 +6,30 @@ using Core.Classes;
 using Core.DateEvaluators;
 using Core.Exceptions;
 
-namespace Core.Services
+namespace Core.Services;
+
+public static class CountryService
 {
-    public static class CountryService
+    public static IEnumerable<Country> GetCountries()
     {
-        public static IEnumerable<Country> GetCountries()
-        {
-            return HolidayEvaluator.Evaluators.Select(o => CreateCountry(o.Key)).OrderBy(o => o.Name);
-        }
+        return HolidayEvaluator.Evaluators.Select(o => CreateCountry(o.Key)).OrderBy(o => o.Name);
+    }
 
-        public static Country GetCountry(string countryCode)
+    public static Country GetCountry(string countryCode)
+    {
+        try
         {
-            try
-            {
-                return GetCountries().First(o => o.Id == countryCode);
-            }
-            catch (Exception)
-            {
-                throw new CountryNotFoundException(countryCode);
-            }
+            return GetCountries().First(o => o.Id == countryCode);
         }
+        catch (Exception)
+        {
+            throw new CountryNotFoundException(countryCode);
+        }
+    }
 
-        private static Country CreateCountry(string name)
-        {
-            var region = new RegionInfo(name);
-            return new Country(region.TwoLetterISORegionName, name, region.DisplayName);
-        }
+    private static Country CreateCountry(string name)
+    {
+        var region = new RegionInfo(name);
+        return new Country(region.TwoLetterISORegionName, name, region.DisplayName);
     }
 }

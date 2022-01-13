@@ -1,9 +1,8 @@
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class PrayerDayRule : RelativeToEasterSunday
 {
-    public class PrayerDayRule : RelativeToEasterSunday
+    public PrayerDayRule() : base(26)
     {
-        public PrayerDayRule() : base(26)
-        {
-        }
     }
 }

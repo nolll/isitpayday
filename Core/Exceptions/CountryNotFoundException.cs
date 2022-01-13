@@ -1,10 +1,9 @@
-namespace Core.Exceptions
+namespace Core.Exceptions;
+
+public class CountryNotFoundException : NotFoundException
 {
-    public class CountryNotFoundException : NotFoundException
+    public CountryNotFoundException(string countryCode)
+        : base($"Country not found: {countryCode}")
     {
-        public CountryNotFoundException(string countryCode)
-            : base($"Country not found: {countryCode}")
-        {
-        }
     }
 }

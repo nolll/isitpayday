@@ -1,12 +1,11 @@
 using System;
 using Core.Classes;
 
-namespace Core.HolidayRules
+namespace Core.HolidayRules;
+
+public class MemorialDayRule : LastDayOfWeekInMonth
 {
-    public class MemorialDayRule : LastDayOfWeekInMonth
+    public MemorialDayRule() : base(DayOfWeek.Monday, Month.May)
     {
-        public MemorialDayRule() : base(DayOfWeek.Monday, Month.May)
-        {
-        }
     }
 }
