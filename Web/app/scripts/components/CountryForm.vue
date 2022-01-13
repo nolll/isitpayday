@@ -9,7 +9,7 @@
                 <a href="#" @click.prevent="close">Cancel</a>
             </p>
             <p v-show="!isFormVisible">
-                <span v-text="countryName"></span>
+                {{countryName}}
                 <a href="#" @click.prevent="open">Change</a>
             </p>
         </div>

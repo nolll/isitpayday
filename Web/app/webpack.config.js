@@ -51,6 +51,10 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: false,
+            __VUE_PROD_DEVTOOLS__: true
+        }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'main-[contenthash].css'
