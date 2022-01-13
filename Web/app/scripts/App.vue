@@ -17,8 +17,7 @@
     </div>
 </template>
 
-<script lang="ts">
-    import { Component, Vue, Watch } from 'vue-property-decorator';
+<script setup lang="ts">
     import dayjs from 'dayjs';
     import CountryForm from './components/CountryForm.vue';
     import TimezoneForm from './components/TimezoneForm.vue';
@@ -31,135 +30,126 @@
     import urls from './urls';
     import defaults from './defaults';
     import storage from './storage';
-    import frequencies from './frequencies';
+    import frequencyTypes from './frequencies';
     import advancedFormat from 'dayjs/plugin/advancedFormat';
+    import { computed, onMounted, ref } from 'vue';
+    
     dayjs.extend(advancedFormat);
 
-    @Component({
-        components: {
-            CountryForm,
-            TimezoneForm,
-            FrequencyForm,
-            PaydayForm
-        }
-    })
-    export default class App extends Vue {
-        private error = '';
-        private isOptionsReady = false;
-        private isPaydayReady = false;
-        private isPayday = false;
-        private nextPayday: Date | null = null;
-        private localTime = '';
-        private payday = defaults.payday;
-        private timezone = defaults.timezone;
-        private frequency = defaults.frequency;
-        private country = defaults.country;
-        private countries: Country[] = [];
-        private timezones: Timezone[] = [];
-        private frequencies: Frequency[] = [];
-        private email = 'info@isitpayday.com';
+    const error = ref('');
+    const isOptionsReady = ref(false);
+    const isPaydayReady = ref(false);
+    const isPayday = ref(false);
+    const nextPayday = ref<Date | null>(null);
+    const localTime = ref('');
+    const payday = ref(defaults.payday);
+    const timezone = ref(defaults.timezone);
+    const frequency = ref(defaults.frequency);
+    const country = ref(defaults.country);
+    const countries = ref<Country[]>([]);
+    const timezones = ref<Timezone[]>([]);
+    const frequencies = ref<Frequency[]>([]);
+    const email = ref('info@isitpayday.com');
 
-        private get isReady(){
-            return this.isPaydayReady && this.isOptionsReady;
-        }
+    const isReady = computed(() => {
+        return isPaydayReady.value && isOptionsReady.value;
+    });
 
-        private get message() {
-            if(this.error)
-                return 'Error';
+    const message = computed(() => {
+        if(error.value)
+            return 'Error';
+        return isPayday.value ? 'YES!!1!' : 'No =(';
+    });
 
-            return this.isPayday ? 'YES!!1!' : 'No =(';
-        }
-
-        private get nextPaydayMessage(){
-            if(this.nextPayday === null)
-                return '';
-            
-            var formattedDate = dayjs(this.nextPayday).format('MMM D');
-            return `Next payday is ${formattedDate}`;
-        }
-
-        private get formattedLocalTime() {
-            if (this.localTime)
-                return dayjs(this.localTime).format('MMM D YYYY, HH:mm:ss');
+    const nextPaydayMessage = computed(() => {
+        if(nextPayday.value === null)
             return '';
-        }
+        
+        var formattedDate = dayjs(nextPayday.value).format('MMM D');
+        return `Next payday is ${formattedDate}`;
+    });
 
-        private get hasError(){
-            return !!this.error;
-        }
+    const formattedLocalTime = computed(() => {
+        if (localTime.value)
+            return dayjs(localTime.value).format('MMM D YYYY, HH:mm:ss');
+        return '';    
+    });
 
-        private get mailtoUrl(){
-            return `mailto:${this.email}`;
-        }
+    const hasError = computed(() => {
+        return !!error.value;    
+    });
 
-        @Watch('country')
-        private countryChanged(){
-            storage.saveCountry(this.country);
-            this.loadPayday();
-        }
+    const mailtoUrl = computed(() => {
+        return `mailto:${email.value}`;    
+    });
 
-        @Watch('frequency')
-        private frequencyChanged(){
-            storage.saveFrequency(this.frequency);
-            this.payday = this.frequency === frequencies.weekly ? defaults.weeklyPayday : defaults.monthlyPayday;
-            storage.savePayday(this.payday);
-            this.loadPayday();
-        }
+    // @Watch('country')
+    const countryChanged = () => {
+        storage.saveCountry(country.value);
+        loadPayday();
+    };
 
-        @Watch('timezone')
-        private timezoneChanged(){
-            storage.saveTimezone(this.timezone);
-            this.loadPayday();
-        }
+    // @Watch('frequency')
+    const frequencyChanged = () => {
+        storage.saveFrequency(frequency.value);
+        payday.value = frequency.value === frequencyTypes.weekly ? defaults.weeklyPayday : defaults.monthlyPayday;
+        storage.savePayday(payday.value);
+        loadPayday();
+    };
 
-        @Watch('payday')
-        private paydayChanged(){
-            storage.savePayday(this.payday);
-            this.loadPayday();
-        }
+    // @Watch('timezone')
+    const timezoneChanged = () => {
+        storage.saveTimezone(timezone.value);
+        loadPayday();
+    };
 
-        private loadSettings(){
-            this.country = storage.getCountry();
-            this.frequency = storage.getFrequency();
-            this.timezone = storage.getTimezone();
-            this.payday = storage.getPayday();
-        }
+    // @Watch('payday')
+    const paydayChanged = () => {
+        storage.savePayday(payday.value);
+        loadPayday();
+    };
 
-        private async loadPayday(){
-            try{
-                const response = await ajax.get(this.paydayUrl);
-                this.isPayday = response.data.isPayDay;
-                this.nextPayday = new Date(response.data.nextPayDay);
-                this.localTime = response.data.localTime;
-                this.isPaydayReady = true;
-            }
-            catch(error){
-                this.error = 'Error loading payday';
-            }
-        }
+    const loadSettings = () => {
+        country.value = storage.getCountry();
+        frequency.value = storage.getFrequency();
+        timezone.value = storage.getTimezone();
+        payday.value = storage.getPayday();
+    };
 
-        private async loadOptions(){
-            try{
-                const response = await ajax.get(urls.optionsUrl);
-                this.countries = response.data.countries;
-                this.timezones = response.data.timezones;
-                this.frequencies = response.data.frequencies;
-                this.isOptionsReady = true;
-            } catch(error) {
-                this.error = 'Error loading options';
-            }
+    const loadPayday = async () => {
+        try{
+            const response = await ajax.get(paydayUrl.value);
+            isPayday.value = response.data.isPayDay;
+            nextPayday.value = new Date(response.data.nextPayDay);
+            localTime.value = response.data.localTime;
+            isPaydayReady.value = true;
         }
+        catch(e){
+            error.value = 'Error loading payday';
+        }
+    };
 
-        private get paydayUrl() {
-            return (this.frequency === frequencies.weekly)
-                ? urls.weeklyUrl(this.payday, this.timezone, this.country)
-                : urls.monthlyUrl(this.payday, this.timezone, this.country);
+    const loadOptions = async () => {
+        try{
+            const response = await ajax.get(urls.optionsUrl);
+            countries.value = response.data.countries;
+            timezones.value = response.data.timezones;
+            frequencies.value = response.data.frequencies;
+            isOptionsReady.value = true;
+        } catch(e) {
+            error.value = 'Error loading options';
         }
+    };
 
-        private mounted() {
-            this.loadSettings();
-            this.loadPayday();
-            this.loadOptions();
-        }
-    }
+    const paydayUrl = computed(() => {
+        return (frequency.value === frequencyTypes.weekly)
+            ? urls.weeklyUrl(payday.value, timezone.value, country.value)
+            : urls.monthlyUrl(payday.value, timezone.value, country.value);
+    });
+
+    onMounted(() => {
+        loadSettings();
+        loadPayday();
+        loadOptions();
+    });
 </script>
