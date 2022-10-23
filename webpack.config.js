@@ -10,12 +10,24 @@ module.exports = {
     entry: './scripts/main.ts',
     output: {
         filename: '[name]-[contenthash].js',
-        path: path.resolve(__dirname, '../wwwroot/dist'),
-        publicPath: '/dist/'
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/'
     },
     devtool: 'source-map',
     module: {
         rules: [
+            // {
+            //     test: /\.(png|jpg)$/i,
+            //     type: 'asset/resource',
+            // },
+            {
+                test: /\.(png|jpg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
             {
                 test: /\.css/,
                 use: [
@@ -60,17 +72,9 @@ module.exports = {
             filename: 'main-[contenthash].css'
         }),
         new VueLoaderPlugin(),
-        new HtmlWebpackPlugin()
-        // new HtmlWebpackPlugin({
-        //     filename: path.resolve(__dirname, '../Views/Generated/Script.cshtml'),
-        //     template: path.resolve(__dirname, './templates/script-template.txt'),
-        //     inject: false
-        // }),
-        // new HtmlWebpackPlugin({
-        //     filename: path.resolve(__dirname, '../Views/Generated/Style.cshtml'),
-        //     template: path.resolve(__dirname, './templates/style-template.txt'),
-        //     inject: false
-        // })
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './index.html')
+        })
     ],
     resolve: {
         alias: {
