@@ -1,3 +1,0 @@
-﻿<% for (key in htmlWebpackPlugin.files.css) { %>
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[key] %>">
-<% } %>
