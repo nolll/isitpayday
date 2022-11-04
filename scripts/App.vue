@@ -108,9 +108,7 @@ watch(payday, (oldVal, newVal) => {
 });
 
 watch(isOptionsReady, (oldVal, newVal) => {
-  const isSavedTimezoneValid = !!timezones.value.find((tz) => {
-    tz.id === timezone.value;
-  });
+  const isSavedTimezoneValid = !!timezones.value.find((tz) => tz.id === timezone.value);
 
   if (!isSavedTimezoneValid) {
     timezone.value = defaults.getDefaultTimezone();
@@ -141,12 +139,22 @@ const loadOptions = async () => {
   try {
     const response = await ajax.get(urls.optionsUrl);
     countries.value = response.data.countries;
-    timezones.value = response.data.timezones;
+    timezones.value = getTimezones();
     frequencies.value = response.data.frequencies;
     isOptionsReady.value = true;
   } catch (e) {
     error.value = 'Error loading options';
   }
+};
+
+const getTimezones = () => {
+  const ids = (Intl as any).supportedValuesOf('timeZone') as string[];
+  return ids.map((id: string) => {
+    return {
+      id: id,
+      name: id,
+    };
+  });
 };
 
 const paydayUrl = computed(() => {

@@ -1,4 +1,4 @@
-export interface Timezone{
-    id: string;
-    name: string;
+export interface Timezone {
+  id: string;
+  name: string;
 }
