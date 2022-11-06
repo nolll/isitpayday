@@ -16,10 +16,6 @@ module.exports = {
     devtool: 'source-map',
     module: {
         rules: [
-            // {
-            //     test: /\.(png|jpg)$/i,
-            //     type: 'asset/resource',
-            // },
             {
                 test: /\.(png|jpg)$/i,
                 use: [
