@@ -12,27 +12,11 @@ module.exports = merge(common, {
         port: 9000,
         https: true,
         proxy: {
-            '/api/options': {
-                target: 'http://localhost:9000',
-                router: () => 'https://isitpayday-api.herokuapp.com',
-                logLevel: 'debug',
-                secure: false,
-                changeOrigin: true
-            },
-            '/api/monthly': {
-                target: 'http://localhost:9000',
-                router: () => 'https://isitpayday-api.herokuapp.com',
-                logLevel: 'debug',
-                secure: false,
-                changeOrigin: true
-            },
-            '/api/weekly': {
-                target: 'http://localhost:9000',
-                router: () => 'https://isitpayday-api.herokuapp.com',
-                logLevel: 'debug',
+            '/api': {
+                target: 'https://isitpayday-api.herokuapp.com',
                 secure: false,
                 changeOrigin: true
             }
-         }
+        }
     }
 });
