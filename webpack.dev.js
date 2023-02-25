@@ -13,9 +13,10 @@ module.exports = merge(common, {
         https: true,
         proxy: {
             '/api': {
-                target: 'https://isitpayday-api.herokuapp.com',
+                target: 'https://api.isitpayday.com',
                 secure: false,
-                changeOrigin: true
+                changeOrigin: true,
+                pathRewrite: {'^/api' : ''}
             }
         }
     }

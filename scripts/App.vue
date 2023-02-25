@@ -16,6 +16,8 @@
     </div>
     <p class="footer">{{ formattedLocalTime }}</p>
     <p class="contact">
+      Api: <a :href="apiUrl">{{ apiHost }}</a>
+      <br />
       Bugs and suggestions: <a :href="mailtoUrl">{{ email }}</a>
     </p>
   </div>
@@ -85,6 +87,12 @@ const mailtoUrl = computed(() => {
   return `mailto:${email.value}`;
 });
 
+const apiHost = 'api.isitpayday.com';
+
+const apiUrl = computed(() => {
+  return `https://${apiHost}`;
+});
+
 watch(country, (oldVal, newVal) => {
   storage.saveCountry(country.value);
   loadPayday();
@@ -137,10 +145,13 @@ const loadPayday = async () => {
 
 const loadOptions = async () => {
   try {
-    const response = await ajax.get(urls.optionsUrl);
-    countries.value = response.data.countries;
+    const [countriesResponse, frequenciesResponse] = await Promise.all([
+      ajax.get(urls.countriesUrl),
+      ajax.get(urls.frequenciesUrl),
+    ]);
+    countries.value = countriesResponse.data;
+    frequencies.value = frequenciesResponse.data;
     timezones.value = getTimezones();
-    frequencies.value = response.data.frequencies;
     isOptionsReady.value = true;
   } catch (e) {
     error.value = 'Error loading options';
@@ -163,9 +174,8 @@ const paydayUrl = computed(() => {
     : urls.monthlyUrl(payday.value, timezone.value, country.value);
 });
 
-onMounted(() => {
+onMounted(async () => {
   loadSettings();
-  loadPayday();
-  loadOptions();
+  await Promise.all([loadPayday(), loadOptions()]);
 });
 </script>
