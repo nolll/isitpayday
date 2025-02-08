@@ -11,12 +11,13 @@ module.exports = merge(common, {
     compress: true,
     port: 9000,
     server: {
-      type: 'https',
+      type: 'http',
     },
     proxy: [
       {
         context: ['/api'],
-        target: 'https://api.isitpayday.com',
+        //target: 'https://api.isitpayday.com',
+        target: 'https://localhost:5010',
         secure: false,
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
