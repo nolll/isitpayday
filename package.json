@@ -9,16 +9,15 @@
     "vue": "^3.5.13"
   },
   "scripts": {
-    "prod": "webpack --config webpack.prod.js",
-    "dev": "webpack --config webpack.dev.js",
-    "serve": "webpack serve --config webpack.dev.js",
-    "watch": "webpack --config webpack.dev.js --watch",
-    "analyze": "cross-env ANALYZE_BUNDLE=1 webpack --config webpack.prod.js"
+    "prod": "vite build",
+    "dev": "cross-env NODE_ENV=dev vite build",
+    "serve": "cross-env NODE_ENV=dev vite serve"
   },
   "devDependencies": {
     "@babel/core": "7.26.8",
     "@babel/preset-env": "7.26.8",
     "@types/js-cookie": "3.0.6",
+    "@vitejs/plugin-vue": "^5.2.4",
     "babel-loader": "9.2.1",
     "clean-webpack-plugin": "4.0.0",
     "cross-env": "^7.0.3",
@@ -29,12 +28,8 @@
     "mini-css-extract-plugin": "2.9.2",
     "ts-loader": "^9.5.2",
     "typescript": "^5.7.3",
-    "vue-loader": "^17.4.2",
-    "webpack": "5.97.1",
-    "webpack-bundle-analyzer": "^4.10.2",
-    "webpack-cli": "6.0.1",
-    "webpack-dev-server": "^5.2.0",
-    "webpack-merge": "6.0.1"
+    "vite": "^6.3.6",
+    "vue-loader": "^17.4.2"
   },
   "author": "nolll",
   "browserslist": [
