@@ -22,6 +22,7 @@ export default {
   },
   plugins: [vue()],
   server: {
+    port: 9000,
     proxy: getProxy(),
   },
 };
