@@ -32,6 +32,7 @@ import PaydayForm from "./components/PaydayForm.vue";
 import { Country } from "@/types/Country";
 import { Frequency } from "@/types/Frequency";
 import { Timezone } from "@/types/Timezone";
+import { PaydayResponse } from "@/types/PaydayResponse";
 import ajax from "./ajax";
 import urls from "./urls";
 import defaults from "./defaults";
@@ -39,7 +40,6 @@ import storage from "./storage";
 import frequencyTypes from "./frequencyTypes";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { computed, onMounted, ref, watch } from "vue";
-import { def } from "@vue/shared";
 
 dayjs.extend(advancedFormat);
 
@@ -139,7 +139,7 @@ const loadSettings = () => {
 
 const loadPayday = async () => {
   try {
-    const response = await ajax.get(paydayUrl.value);
+    const response = await ajax.get<PaydayResponse>(paydayUrl.value);
     isPayday.value = response.isPayDay;
     nextPayday.value = new Date(response.nextPayDay);
     localTime.value = response.localTime;
@@ -152,8 +152,8 @@ const loadPayday = async () => {
 const loadOptions = async () => {
   try {
     const [countriesResponse, frequenciesResponse] = await Promise.all([
-      ajax.get(urls.countriesUrl),
-      ajax.get(urls.frequenciesUrl),
+      ajax.get<Country[]>(urls.countriesUrl),
+      ajax.get<Frequency[]>(urls.frequenciesUrl),
     ]);
     countries.value = countriesResponse;
     frequencies.value = frequenciesResponse;
