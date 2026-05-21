@@ -3,7 +3,6 @@
   "private": true,
   "description": "Is It Payday?",
   "dependencies": {
-    "axios": "1.16.1",
     "dayjs": "1.11.20",
     "js-cookie": "3.0.7",
     "vue": "^3.5.34"
