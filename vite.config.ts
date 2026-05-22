@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 function getProxy() {
@@ -6,7 +7,7 @@ function getProxy() {
     "/api": {
       //target: 'https://api.isitpayday.com',
       target: "https://localhost:5010",
-      rewrite: (path) => path.replace(/^\/api/, ""),
+      rewrite: (path: string) => path.replace(/^\/api/, ""),
       changeOrigin: true,
       secure: false,
       ws: true,
@@ -14,7 +15,7 @@ function getProxy() {
   };
 }
 
-export default {
+export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "./scripts"),
@@ -25,4 +26,4 @@ export default {
     port: 9000,
     proxy: getProxy(),
   },
-};
+});

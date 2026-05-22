@@ -3,18 +3,16 @@
         "target": "esnext",
         "module": "esnext",
         "strict": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "importHelpers": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "downlevelIteration": true,
         "noImplicitAny": true,
-        "baseUrl": "./scripts/",
         "paths": {
             "@/*": [
-                "*"
+                "./scripts/*"
             ]
         }
     },
