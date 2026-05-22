@@ -1,19 +1,19 @@
 import { useState, useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
-import CountryForm from "./components/CountryForm";
-import TimezoneForm from "./components/TimezoneForm";
-import FrequencyForm from "./components/FrequencyForm";
-import PaydayForm from "./components/PaydayForm";
+import CountryForm from "@/components/CountryForm";
+import TimezoneForm from "@/components/TimezoneForm";
+import FrequencyForm from "@/components/FrequencyForm";
+import PaydayForm from "@/components/PaydayForm";
 import type { Country } from "@/types/Country";
 import type { Frequency } from "@/types/Frequency";
 import type { Timezone } from "@/types/Timezone";
 import type { PaydayResponse } from "@/types/PaydayResponse";
-import ajax from "./ajax";
-import urls from "./urls";
-import defaults from "./defaults";
-import storage from "./storage";
-import frequencyTypes from "./frequencyTypes";
+import ajax from "@/ajax";
+import urls from "@/urls";
+import defaults from "@/defaults";
+import storage from "@/storage";
+import frequencyTypes from "@/frequencyTypes";
 
 dayjs.extend(advancedFormat);
 
