@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import frequencyTypes from '@/frequencyTypes';
-import nthFormatter from '@/nth-formatter';
-import weekdays from '@/weekdays';
+import { frequencyTypes } from '@/frequencyTypes';
+import { formatNth } from '@/nth-formatter';
+import { getWeekdayName } from '@/weekdays';
 import type { Payday } from '@/types/Payday';
 
 interface Props {
@@ -10,20 +10,20 @@ interface Props {
   onChange: (value: number) => void;
 }
 
-function format(frequencyId: string, payday: number): string {
-  if (frequencyId === frequencyTypes.weekly) return weekdays.getName(payday);
-  return nthFormatter.format(payday);
-}
+const format = (frequencyId: string, payday: number): string => {
+  if (frequencyId === frequencyTypes.weekly) return getWeekdayName(payday);
+  return formatNth(payday);
+};
 
-function buildPaydays(frequencyId: string, upperBound: number): Payday[] {
+const buildPaydays = (frequencyId: string, upperBound: number): Payday[] => {
   const result: Payday[] = [];
   for (let i = 1; i <= upperBound; i++) {
     result.push({ id: i, name: format(frequencyId, i) });
   }
   return result;
-}
+};
 
-export default function PaydayForm({ value, frequencyId, onChange }: Props) {
+export const PaydayForm = ({ value, frequencyId, onChange }: Props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const paydayName = format(frequencyId, value);
@@ -75,4 +75,4 @@ export default function PaydayForm({ value, frequencyId, onChange }: Props) {
       </div>
     </div>
   );
-}
+};

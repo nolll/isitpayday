@@ -1,4 +1,4 @@
-export default {
+export const frequencyTypes = {
   monthly: 'monthly',
   weekly: 'weekly',
 };

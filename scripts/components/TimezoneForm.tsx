@@ -7,7 +7,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export default function TimezoneForm({ value, timezones, onChange }: Props) {
+export const TimezoneForm = ({ value, timezones, onChange }: Props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const timezoneName = timezones.find((t) => t.id === value)?.name ?? '';
@@ -56,4 +56,4 @@ export default function TimezoneForm({ value, timezones, onChange }: Props) {
       </div>
     </div>
   );
-}
+};

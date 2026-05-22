@@ -7,7 +7,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export default function FrequencyForm({ value, frequencies, onChange }: Props) {
+export const FrequencyForm = ({ value, frequencies, onChange }: Props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const frequencyName = frequencies.find((f) => f.id === value)?.name ?? '';
@@ -54,4 +54,4 @@ export default function FrequencyForm({ value, frequencies, onChange }: Props) {
       </div>
     </div>
   );
-}
+};

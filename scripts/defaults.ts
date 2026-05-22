@@ -1,4 +1,4 @@
-import frequencyTypes from './frequencyTypes';
+import {frequencyTypes} from '@/frequencyTypes';
 
 const monthlyPayday = 25;
 const weeklyPayday = 5;

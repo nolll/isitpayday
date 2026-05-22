@@ -7,7 +7,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export default function CountryForm({ value, countries, onChange }: Props) {
+export const CountryForm = ({ value, countries, onChange }: Props) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const countryName = countries.find((c) => c.id === value)?.name ?? '';
@@ -54,4 +54,4 @@ export default function CountryForm({ value, countries, onChange }: Props) {
       </div>
     </div>
   );
-}
+};

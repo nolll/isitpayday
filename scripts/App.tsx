@@ -2,10 +2,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import CountryForm from '@/components/CountryForm';
-import TimezoneForm from '@/components/TimezoneForm';
-import FrequencyForm from '@/components/FrequencyForm';
-import PaydayForm from '@/components/PaydayForm';
+import { CountryForm } from '@/components/CountryForm';
+import { TimezoneForm } from '@/components/TimezoneForm';
+import { FrequencyForm } from '@/components/FrequencyForm';
+import { PaydayForm } from '@/components/PaydayForm';
 import type { Country } from '@/types/Country';
 import type { Frequency } from '@/types/Frequency';
 import type { Timezone } from '@/types/Timezone';
@@ -14,7 +14,7 @@ import ajax from '@/ajax';
 import urls from '@/urls';
 import defaults from '@/defaults';
 import storage from '@/storage';
-import frequencyTypes from '@/frequencyTypes';
+import { frequencyTypes } from '@/frequencyTypes';
 
 dayjs.extend(advancedFormat);
 
@@ -23,7 +23,7 @@ const getTimezones = (): Timezone[] => {
   return ids.map((id: string) => ({ id, name: id }));
 };
 
-export default function App() {
+export const App = () => {
   const [payday, setPayday] = useState(() => storage.getPayday());
   const [timezone, setTimezone] = useState(() => storage.getTimezone());
   const [frequency, setFrequency] = useState(() => storage.getFrequency());
@@ -35,7 +35,11 @@ export default function App() {
   const paydayUrl =
     frequency === frequencyTypes.weekly ? urls.weeklyUrl(payday, timezone, country) : urls.monthlyUrl(payday, timezone, country);
 
-  const { data: optionsData, isSuccess: isOptionsReady, isError: isOptionsError } = useQuery({
+  const {
+    data: optionsData,
+    isSuccess: isOptionsReady,
+    isError: isOptionsError,
+  } = useQuery({
     queryKey: ['options'],
     queryFn: async () => {
       const [countriesResponse, frequenciesResponse] = await Promise.all([
@@ -46,7 +50,11 @@ export default function App() {
     },
   });
 
-  const { data: paydayData, isSuccess: isPaydayReady, isError: isPaydayError } = useQuery({
+  const {
+    data: paydayData,
+    isSuccess: isPaydayReady,
+    isError: isPaydayError,
+  } = useQuery({
     queryKey: ['payday', paydayUrl],
     queryFn: () => ajax.get<PaydayResponse>(paydayUrl),
   });
@@ -72,15 +80,15 @@ export default function App() {
   const isReady = isPaydayReady && isOptionsReady;
   const message = error ? 'Error' : isPayday ? 'YES!!1!' : 'No =(';
 
-  const nextPaydayMessage = useMemo(() => {
-    if (nextPayday === null) return '';
-    return `Next payday is ${dayjs(nextPayday).format('MMM D')}`;
-  }, [nextPayday]);
+  const nextPaydayMessage = useMemo(
+    () => (nextPayday === null ? '' : `Next payday is ${dayjs(nextPayday).format('MMM D')}`),
+    [nextPayday],
+  );
 
-  const formattedLocalTime = useMemo(() => {
-    if (localTime) return dayjs(localTime).format('MMM D YYYY, HH:mm:ss');
-    return '';
-  }, [localTime]);
+  const formattedLocalTime = useMemo(
+    () => (localTime ? `Your local time: ${dayjs(localTime).format('MMM D YYYY, HH:mm:ss')}` : ''),
+    [localTime],
+  );
 
   const mailtoUrl = `mailto:${email}`;
   const apiUrl = `https://${apiHost}`;
@@ -136,4 +144,4 @@ export default function App() {
       </p>
     </div>
   );
-}
+};
