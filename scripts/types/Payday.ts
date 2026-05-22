@@ -1,4 +1,4 @@
-export interface Payday{
-    id: number;
-    name: string;
+export interface Payday {
+  id: number;
+  name: string;
 }

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Frequency } from "@/types/Frequency";
+import { useState } from 'react';
+import type { Frequency } from '@/types/Frequency';
 
 interface Props {
   value: string;
@@ -10,7 +10,7 @@ interface Props {
 export default function FrequencyForm({ value, frequencies, onChange }: Props) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const frequencyName = frequencies.find((f) => f.id === value)?.name ?? "";
+  const frequencyName = frequencies.find((f) => f.id === value)?.name ?? '';
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setIsFormVisible(false);
@@ -21,7 +21,7 @@ export default function FrequencyForm({ value, frequencies, onChange }: Props) {
     <div>
       <h3>Frequency</h3>
       <div className="frequency-info">
-        <p style={{ display: isFormVisible ? "" : "none" }}>
+        <p style={{ display: isFormVisible ? '' : 'none' }}>
           <select value={value} onChange={handleChange}>
             {frequencies.map((f) => (
               <option value={f.id} key={f.id}>
@@ -39,8 +39,8 @@ export default function FrequencyForm({ value, frequencies, onChange }: Props) {
             Cancel
           </a>
         </p>
-        <p style={{ display: isFormVisible ? "none" : "" }}>
-          {frequencyName}{" "}
+        <p style={{ display: isFormVisible ? 'none' : '' }}>
+          {frequencyName}{' '}
           <a
             href="#"
             onClick={(e) => {

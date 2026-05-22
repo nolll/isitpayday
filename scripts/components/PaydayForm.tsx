@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
-import frequencyTypes from "@/frequencyTypes";
-import nthFormatter from "@/nth-formatter";
-import weekdays from "@/weekdays";
-import type { Payday } from "@/types/Payday";
+import { useState, useMemo } from 'react';
+import frequencyTypes from '@/frequencyTypes';
+import nthFormatter from '@/nth-formatter';
+import weekdays from '@/weekdays';
+import type { Payday } from '@/types/Payday';
 
 interface Props {
   value: number;
@@ -42,7 +42,7 @@ export default function PaydayForm({ value, frequencyId, onChange }: Props) {
     <div>
       <h3>Payday</h3>
       <div className="payday-info">
-        <p style={{ display: isFormVisible ? "" : "none" }}>
+        <p style={{ display: isFormVisible ? '' : 'none' }}>
           <select value={value} onChange={handleChange}>
             {paydays.map((p) => (
               <option value={p.id} key={p.id}>
@@ -60,8 +60,8 @@ export default function PaydayForm({ value, frequencyId, onChange }: Props) {
             Cancel
           </a>
         </p>
-        <p style={{ display: isFormVisible ? "none" : "" }}>
-          {paydayName}{" "}
+        <p style={{ display: isFormVisible ? 'none' : '' }}>
+          {paydayName}{' '}
           <a
             href="#"
             onClick={(e) => {

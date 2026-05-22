@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Country } from "@/types/Country";
+import { useState } from 'react';
+import type { Country } from '@/types/Country';
 
 interface Props {
   value: string;
@@ -10,7 +10,7 @@ interface Props {
 export default function CountryForm({ value, countries, onChange }: Props) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const countryName = countries.find((c) => c.id === value)?.name ?? "";
+  const countryName = countries.find((c) => c.id === value)?.name ?? '';
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setIsFormVisible(false);
@@ -21,7 +21,7 @@ export default function CountryForm({ value, countries, onChange }: Props) {
     <div>
       <h3>Country</h3>
       <div className="country-info">
-        <p style={{ display: isFormVisible ? "" : "none" }}>
+        <p style={{ display: isFormVisible ? '' : 'none' }}>
           <select value={value} onChange={handleChange}>
             {countries.map((c) => (
               <option value={c.id} key={c.id}>
@@ -39,8 +39,8 @@ export default function CountryForm({ value, countries, onChange }: Props) {
             Cancel
           </a>
         </p>
-        <p style={{ display: isFormVisible ? "none" : "" }}>
-          {countryName}{" "}
+        <p style={{ display: isFormVisible ? 'none' : '' }}>
+          {countryName}{' '}
           <a
             href="#"
             onClick={(e) => {

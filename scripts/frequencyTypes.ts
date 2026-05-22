@@ -1,4 +1,4 @@
 export default {
-    monthly: 'monthly',
-    weekly: 'weekly'
+  monthly: 'monthly',
+  weekly: 'weekly',
 };

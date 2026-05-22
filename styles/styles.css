@@ -1,156 +1,157 @@
-﻿body{
-    background-color: #fff;
-    color: #000;
-    font-family: courier new,verdana;
+﻿body {
+  background-color: #fff;
+  color: #000;
+  font-family:
+    courier new,
+    verdana;
 }
 
-h1{
-    background-color: #000;
-    color: #fff;
-    font-size: 1em;
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 15px;
+h1 {
+  background-color: #000;
+  color: #fff;
+  font-size: 1em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 15px;
 }
 
-h2{
-    font-size: 1.2em;
-    font-weight: normal;
-    margin: 0;
-    padding: 0;
+h2 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
 }
 
-a{
-    color: #000;
+a {
+  color: #000;
 }
 
-p{
-    margin: 0;
-    padding: 5px 0 0 0;
+p {
+  margin: 0;
+  padding: 5px 0 0 0;
 }
 
-p.message{
-    font-size: 13em;
-    margin: 0.6em 0 0 0;
-    text-align: center;
+p.message {
+  font-size: 13em;
+  margin: 0.6em 0 0 0;
+  text-align: center;
 }
 
-p.next-payday{
-    text-align: center;
+p.next-payday {
+  text-align: center;
 }
 
-p.error{
-    font-size: 1em;
-    text-align: center;
+p.error {
+  font-size: 1em;
+  text-align: center;
 }
 
-.settings{
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    margin: 0;
-    padding: 0;
-    width: 49%;
+.settings {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  margin: 0;
+  padding: 0;
+  width: 49%;
 }
 
-.settings h3{
-    font-size: 1em;
-    margin: 10px 0 0 0;
+.settings h3 {
+  font-size: 1em;
+  margin: 10px 0 0 0;
 }
 
-.settings p{
-    font-size: 0.8em;
-    padding: 0;
+.settings p {
+  font-size: 0.8em;
+  padding: 0;
 }
 
-.settings select{
-    margin-right: 8px;
+.settings select {
+  margin-right: 8px;
 }
 
-button{
-    border: none;
-    background: #000;
-    color: #fff;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 1.5em;
+button {
+  border: none;
+  background: #000;
+  color: #fff;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
-p.footer{
-    color: #bbbbbb;
-    font-size: 1em;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+p.footer {
+  color: #bbbbbb;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
-p.contact{
-    color: #bbbbbb;
-    font-size: 1em;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    width: 49%;
-    text-align: right;
+p.contact {
+  color: #bbbbbb;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 49%;
+  text-align: right;
 }
-
 
 @media (prefers-color-scheme: dark) {
-    body{
-        background-color: #000;
-        color: #ccc;
-    }
+  body {
+    background-color: #000;
+    color: #ccc;
+  }
 
-    h1{
-        background-color: #ccc;
-        color: #000;
-    }
+  h1 {
+    background-color: #ccc;
+    color: #000;
+  }
 
-    a{
-        color: #ccc;
-    }
+  a {
+    color: #ccc;
+  }
 
-    button{
-        background: #ccc;
-        color: #000;
-    }
-    
-    p.footer,
-    p.contact{
-        color: #777;
-    }
+  button {
+    background: #ccc;
+    color: #000;
+  }
+
+  p.footer,
+  p.contact {
+    color: #777;
+  }
 }
 
 @media (prefers-color-scheme: light) {
-    body{
-        background-color: #fff;
-        color: #000;
-    }
+  body {
+    background-color: #fff;
+    color: #000;
+  }
 
-    h1{
-        background-color: #000;
-        color: #fff;
-    }
+  h1 {
+    background-color: #000;
+    color: #fff;
+  }
 
-    a{
-        color: #000;
-    }
+  a {
+    color: #000;
+  }
 
-    button{
-        background: #000;
-        color: #fff;
-    }
-    
-    p.footer,
-    p.contact{
-        color: #bbb;
-    }
+  button {
+    background: #000;
+    color: #fff;
+  }
+
+  p.footer,
+  p.contact {
+    color: #bbb;
+  }
 }

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Timezone } from "@/types/Timezone";
+import { useState } from 'react';
+import type { Timezone } from '@/types/Timezone';
 
 interface Props {
   value: string;
@@ -10,7 +10,7 @@ interface Props {
 export default function TimezoneForm({ value, timezones, onChange }: Props) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const timezoneName = timezones.find((t) => t.id === value)?.name ?? "";
+  const timezoneName = timezones.find((t) => t.id === value)?.name ?? '';
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setIsFormVisible(false);
@@ -23,7 +23,7 @@ export default function TimezoneForm({ value, timezones, onChange }: Props) {
     <div>
       <h3>Timezone</h3>
       <div className="timezone-info">
-        <p style={{ display: isFormVisible ? "" : "none" }}>
+        <p style={{ display: isFormVisible ? '' : 'none' }}>
           <select value={value} onChange={handleChange}>
             {timezones.map((t) => (
               <option value={t.id} key={t.id}>
@@ -41,8 +41,8 @@ export default function TimezoneForm({ value, timezones, onChange }: Props) {
             Cancel
           </a>
         </p>
-        <p style={{ display: isFormVisible ? "none" : "" }}>
-          {timezoneName}{" "}
+        <p style={{ display: isFormVisible ? 'none' : '' }}>
+          {timezoneName}{' '}
           <a
             href="#"
             onClick={(e) => {

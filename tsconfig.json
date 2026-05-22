@@ -1,41 +1,24 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
-        "strict": true,
-        "moduleResolution": "bundler",
-        "importHelpers": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "jsx": "react-jsx",
-        "allowImportingTsExtensions": true,
-        "noEmit": true,
-        "paths": {
-            "@/*": [
-                "./scripts/*"
-            ]
-        }
-    },
-    "typeRoots": [
-        "./node_modules/@types"
-    ],
-    "include": [
-        "./scripts/*.ts",
-        "./scripts/**/*.ts",
-        "./scripts/*.tsx",
-        "./scripts/**/*.tsx",
-        "./global-shim.d.ts",
-    ],
-    "exclude": [
-        "node_modules"
-    ],
-    "lib": [
-        "dom",
-        "dom.iterable",
-        "scripthost",
-        "es2015"
-    ]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./scripts/*"]
+    }
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["./scripts/*.ts", "./scripts/**/*.ts", "./scripts/*.tsx", "./scripts/**/*.tsx", "./global-shim.d.ts"],
+  "exclude": ["node_modules"],
+  "lib": ["dom", "dom.iterable", "scripthost", "es2015"]
 }
