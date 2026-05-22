@@ -10,6 +10,9 @@
         "experimentalDecorators": true,
         "sourceMap": true,
         "noImplicitAny": true,
+        "jsx": "react-jsx",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
         "paths": {
             "@/*": [
                 "./scripts/*"
@@ -22,8 +25,8 @@
     "include": [
         "./scripts/*.ts",
         "./scripts/**/*.ts",
-        "./scripts/*.vue",
-        "./scripts/**/*.vue",
+        "./scripts/*.tsx",
+        "./scripts/**/*.tsx",
         "./global-shim.d.ts",
     ],
     "exclude": [
