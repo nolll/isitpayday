@@ -3,6 +3,7 @@
   "private": true,
   "description": "Is It Payday?",
   "dependencies": {
+    "@tanstack/react-query": "^5.100.11",
     "dayjs": "1.11.20",
     "js-cookie": "3.0.7",
     "react": "^19.0.0",

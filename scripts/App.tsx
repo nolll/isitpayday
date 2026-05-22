@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import CountryForm from '@/components/CountryForm';
@@ -17,24 +18,57 @@ import frequencyTypes from '@/frequencyTypes';
 
 dayjs.extend(advancedFormat);
 
+const getTimezones = (): Timezone[] => {
+  const ids = (Intl as any).supportedValuesOf('timeZone') as string[];
+  return ids.map((id: string) => ({ id, name: id }));
+};
+
 export default function App() {
-  const [error, setError] = useState('');
-  const [isOptionsReady, setIsOptionsReady] = useState(false);
-  const [isPaydayReady, setIsPaydayReady] = useState(false);
-  const [isPayday, setIsPayday] = useState(false);
-  const [nextPayday, setNextPayday] = useState<Date | null>(null);
-  const [localTime, setLocalTime] = useState('');
   const [payday, setPayday] = useState(() => storage.getPayday());
   const [timezone, setTimezone] = useState(() => storage.getTimezone());
   const [frequency, setFrequency] = useState(() => storage.getFrequency());
   const [country, setCountry] = useState(() => storage.getCountry());
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [timezones, setTimezones] = useState<Timezone[]>([]);
-  const [frequencies, setFrequencies] = useState<Frequency[]>([]);
 
   const email = 'info@isitpayday.com';
   const apiHost = 'api.isitpayday.com';
 
+  const paydayUrl =
+    frequency === frequencyTypes.weekly ? urls.weeklyUrl(payday, timezone, country) : urls.monthlyUrl(payday, timezone, country);
+
+  const { data: optionsData, isSuccess: isOptionsReady, isError: isOptionsError } = useQuery({
+    queryKey: ['options'],
+    queryFn: async () => {
+      const [countriesResponse, frequenciesResponse] = await Promise.all([
+        ajax.get<Country[]>(urls.countriesUrl),
+        ajax.get<Frequency[]>(urls.frequenciesUrl),
+      ]);
+      return { countries: countriesResponse, frequencies: frequenciesResponse, timezones: getTimezones() };
+    },
+  });
+
+  const { data: paydayData, isSuccess: isPaydayReady, isError: isPaydayError } = useQuery({
+    queryKey: ['payday', paydayUrl],
+    queryFn: () => ajax.get<PaydayResponse>(paydayUrl),
+  });
+
+  useEffect(() => {
+    if (!optionsData) return;
+    const isSavedTimezoneValid = !!optionsData.timezones.find((tz) => tz.id === timezone);
+    if (!isSavedTimezoneValid) {
+      const defaultTz = defaults.getDefaultTimezone();
+      storage.saveTimezone(defaultTz);
+      setTimezone(defaultTz);
+    }
+  }, [optionsData]);
+
+  const countries = optionsData?.countries ?? [];
+  const frequencies = optionsData?.frequencies ?? [];
+  const timezones = optionsData?.timezones ?? [];
+  const isPayday = paydayData?.isPayDay ?? false;
+  const nextPayday = paydayData ? new Date(paydayData.nextPayDay) : null;
+  const localTime = paydayData?.localTime ?? '';
+
+  const error = isOptionsError ? 'Error loading options' : isPaydayError ? 'Error loading payday' : '';
   const isReady = isPaydayReady && isOptionsReady;
   const message = error ? 'Error' : isPayday ? 'YES!!1!' : 'No =(';
 
@@ -50,62 +84,6 @@ export default function App() {
 
   const mailtoUrl = `mailto:${email}`;
   const apiUrl = `https://${apiHost}`;
-
-  const paydayUrl =
-    frequency === frequencyTypes.weekly ? urls.weeklyUrl(payday, timezone, country) : urls.monthlyUrl(payday, timezone, country);
-
-  const getTimezones = (): Timezone[] => {
-    const ids = (Intl as any).supportedValuesOf('timeZone') as string[];
-    return ids.map((id: string) => ({ id, name: id }));
-  };
-
-  const loadPayday = async () => {
-    try {
-      const response = await ajax.get<PaydayResponse>(paydayUrl);
-      setIsPayday(response.isPayDay);
-      setNextPayday(new Date(response.nextPayDay));
-      setLocalTime(response.localTime);
-      setIsPaydayReady(true);
-    } catch {
-      setError('Error loading payday');
-    }
-  };
-
-  const loadOptions = async () => {
-    try {
-      const [countriesResponse, frequenciesResponse] = await Promise.all([
-        ajax.get<Country[]>(urls.countriesUrl),
-        ajax.get<Frequency[]>(urls.frequenciesUrl),
-      ]);
-      const timezoneList = getTimezones();
-      setCountries(countriesResponse);
-      setFrequencies(frequenciesResponse);
-      setTimezones(timezoneList);
-      setIsOptionsReady(true);
-
-      const currentTimezone = storage.getTimezone();
-      const isSavedTimezoneValid = !!timezoneList.find((tz) => tz.id === currentTimezone);
-      if (!isSavedTimezoneValid) {
-        const defaultTz = defaults.getDefaultTimezone();
-        storage.saveTimezone(defaultTz);
-        setTimezone(defaultTz);
-      }
-    } catch {
-      setError('Error loading options');
-    }
-  };
-
-  // Reload payday whenever the URL changes (also fires on initial mount)
-  useEffect(() => {
-    loadPayday();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paydayUrl]);
-
-  // Load options once on mount
-  useEffect(() => {
-    loadOptions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleCountryChange = (newCountry: string) => {
     storage.saveCountry(newCountry);
