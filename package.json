@@ -3,11 +3,11 @@
   "private": true,
   "description": "Is It Payday?",
   "dependencies": {
-    "@tanstack/react-query": "^5.100.11",
-    "dayjs": "1.11.20",
-    "js-cookie": "3.0.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@tanstack/react-query": "^5.101.2",
+    "dayjs": "1.11.21",
+    "js-cookie": "3.0.8",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "scripts": {
     "prod": "vite build",
@@ -16,13 +16,13 @@
   },
   "devDependencies": {
     "@types/js-cookie": "3.0.6",
-    "@types/node": "^25.9.1",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^6.0.0",
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
     "cross-env": "^10.1.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14"
+    "vite": "^8.1.3"
   },
   "author": "nolll",
   "browserslist": [
@@ -31,5 +31,8 @@
   ],
   "overrides": {
     "postcss": "^8.5.10"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
