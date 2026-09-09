@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 const getChunks = (id: string) => (id.includes('node_modules') ? 'vendors' : null);
 
 const getAlias = () => ({
-  '@': resolve(__dirname, './scripts'),
+  '@': resolve(import.meta.dirname, './scripts'),
 });
 
 const getProxy = () => ({
